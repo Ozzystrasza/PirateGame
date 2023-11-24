@@ -11,9 +11,9 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Landscape
+  - Ships
+  - Projectiles
   - 
   - 
   - 
@@ -40,4 +40,22 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3017395469
+    locked: 0
+  - name: Projectiles
+    uniqueID: 336260705
+    locked: 0
+  - name: Enemies
+    uniqueID: 3174192761
+    locked: 0
+  - name: Player
+    uniqueID: 667383613
+    locked: 0
+  - name: Explosion
+    uniqueID: 3584190393
+    locked: 0
+  - name: UI
+    uniqueID: 149295283
     locked: 0

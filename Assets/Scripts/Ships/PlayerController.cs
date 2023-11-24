@@ -76,6 +76,13 @@ public class PlayerController : Ship
 
     protected override void Rotate()
     {
-        transform.Rotate(Vector3.forward, Input.GetAxis("Horizontal") * rotateSpeed * Time.deltaTime);
+        transform.Rotate(Vector3.forward, -Input.GetAxis("Horizontal") * rotateSpeed * Time.deltaTime);
+    }
+
+    protected override void DestroyShip()
+    {
+        GameManager.instance.GameOver();
+
+        base.DestroyShip();
     }
 }

@@ -39,7 +39,7 @@ public abstract class Ship : MonoBehaviour
     protected abstract void Move();
     protected abstract void Rotate();
 
-    void DestroyShip()
+    protected virtual void DestroyShip()
     {
         spriteRenderer.enabled = false;
         explosion.SetActive(true);
@@ -51,13 +51,22 @@ public abstract class Ship : MonoBehaviour
     {
         health -= damage;
 
-        healthBar.fillAmount = maxHealth / health;
+        float healthPercentage = health / maxHealth;
+        healthBar.fillAmount = healthPercentage;
 
-        if (health < 0)
+        if (health <= 0)
             DestroyShip();
-        else if (health < midHealthThreshold)
+        else if (healthPercentage < midHealthThreshold)
             spriteRenderer.sprite = lowHealthSprite;
-        else if (health < fullHealthThreshold)
+        else if (healthPercentage < fullHealthThreshold)
             spriteRenderer.sprite = midHealthSprite;
+    }
+
+    protected void LookAtTarget(Transform target)
+    {
+        Vector3 diff = target.position - transform.position;
+
+        float rot_z = Mathf.Atan2(diff.y, diff.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, rot_z + 90);
     }
 }

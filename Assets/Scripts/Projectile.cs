@@ -22,9 +22,10 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (TryGetComponent<Ship>(out Ship ship))
+        if (other.gameObject.TryGetComponent<Ship>(out Ship ship))
             ship.GetHit(damage);
 
+        speed = 0;
         Explosion();
     }
 

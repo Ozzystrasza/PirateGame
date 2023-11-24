@@ -30,6 +30,14 @@ public class Chaser : Ship
         }
     }
 
+    protected override void DestroyShip()
+    {
+        if (health <= 0)
+            GameManager.instance.AddPlayerScore();
+
+        base.DestroyShip();
+    }
+
     protected override void Move()
     {
         transform.position += -transform.up * speed * Time.deltaTime;
@@ -37,6 +45,7 @@ public class Chaser : Ship
 
     protected override void Rotate()
     {
-        LookAtTarget(target);
+        if (target)
+            LookAtTarget(target);
     }
 }

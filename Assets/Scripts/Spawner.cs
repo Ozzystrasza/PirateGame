@@ -8,15 +8,10 @@ public class Spawner : MonoBehaviour
     [SerializeField] List<Ship> enemies;
     float spawnRate;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartCoroutine(SpawnEnemies());
-    }
-
-    public void SetSpawnRate(float spawnRate)
+    public void StartSpawning(float spawnRate)
     {
         this.spawnRate = spawnRate;
+        StartCoroutine(SpawnEnemies());
     }
 
     void SpawnEnemy()
@@ -25,6 +20,11 @@ public class Spawner : MonoBehaviour
         int spotIndex = Random.Range(0, spawnSpots.Count);
 
         Instantiate(enemies[enemyIndex], spawnSpots[spotIndex].position, spawnSpots[spotIndex].rotation);
+    }
+
+    public void StopSpawning()
+    {
+        StopAllCoroutines();
     }
 
     IEnumerator SpawnEnemies()

@@ -49,6 +49,9 @@ public abstract class Ship : MonoBehaviour
 
     public void GetHit(float damage)
     {
+        if (health <= 0)
+            return;
+
         health -= damage;
 
         float healthPercentage = health / maxHealth;

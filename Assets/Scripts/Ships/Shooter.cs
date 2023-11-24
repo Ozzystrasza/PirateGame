@@ -32,8 +32,11 @@ public class Shooter : Ship
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        canMove = false;
-        isRotating = true;
+        if (!other.gameObject.CompareTag("Projectile"))
+        {
+            canMove = false;
+            isRotating = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -55,7 +58,8 @@ public class Shooter : Ship
     {
         if (isInRange && canFire)
         {
-            LookAtTarget(target);
+            if (target)
+                LookAtTarget(target);
 
             canFire = false;
             Invoke(nameof(EnableCannonFire), fireCoolDown);
@@ -83,6 +87,12 @@ public class Shooter : Ship
 
             Invoke(nameof(StopRotating), 3);
         }
+    }
+
+    protected override void DestroyShip()
+    {
+        GameManager.instance.AddPlayerScore();
+        base.DestroyShip();
     }
 
     void StopRotating()

@@ -7,7 +7,7 @@ public class PlayerController : Ship
     [SerializeField] float fireCoolDown;
     [SerializeField] Projectile cannonBall;
     [SerializeField] Transform frontalFirePosition;
-    [SerializeField] Transform sideFirePosition;
+    [SerializeField] List<Transform> sideFirePositions;
 
     float sideFireOffset = -0.25f;
 
@@ -18,7 +18,6 @@ public class PlayerController : Ship
     protected override void Start()
     {
         base.Start();
-        EnableControlOfShip();
     }
 
     // Update is called once per frame
@@ -52,9 +51,10 @@ public class PlayerController : Ship
             canFire = false;
             Invoke(nameof(EnableCannonFire), fireCoolDown);
 
-            Instantiate(cannonBall, sideFirePosition.position, sideFirePosition.rotation).SetProjectileDamage(damage);
-            Instantiate(cannonBall, sideFirePosition.position - (Vector3.up * sideFireOffset), sideFirePosition.rotation).SetProjectileDamage(damage);
-            Instantiate(cannonBall, sideFirePosition.position + (Vector3.up * sideFireOffset), sideFirePosition.rotation).SetProjectileDamage(damage);
+            foreach (var sideFirePosition in sideFirePositions)
+            {
+                Instantiate(cannonBall, sideFirePosition.position, sideFirePosition.rotation).SetProjectileDamage(damage);
+            }
         }
     }
 
@@ -66,6 +66,11 @@ public class PlayerController : Ship
     public void EnableControlOfShip()
     {
         canControlShip = true;
+    }
+
+    public void DisableControlOfShip()
+    {
+        canControlShip = false;
     }
 
     protected override void Move()
@@ -81,7 +86,8 @@ public class PlayerController : Ship
 
     protected override void DestroyShip()
     {
-        GameManager.instance.GameOver();
+        if (canControlShip)
+            GameManager.instance.GameOver();
 
         base.DestroyShip();
     }
